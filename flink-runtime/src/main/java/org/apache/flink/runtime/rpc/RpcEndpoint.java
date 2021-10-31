@@ -64,6 +64,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
  *
  * <ul>
  *   <li>The RPC endpoint is created in a non-running state and does not serve any RPC requests.
+ *   调用 {@link #start()} 方法会触发 RPC 端点的启动，并将可覆盖的 {@link #onStart()} 方法调用调度到主线程。
  *   <li>Calling the {@link #start()} method triggers the start of the RPC endpoint and schedules
  *       overridable {@link #onStart()} method call to the main thread.
  *   <li>When the start operation ends the RPC endpoint is moved to the running state and starts to

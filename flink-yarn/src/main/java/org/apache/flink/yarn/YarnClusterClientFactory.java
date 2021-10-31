@@ -75,6 +75,7 @@ public class YarnClusterClientFactory
     }
 
     private YarnClusterDescriptor getClusterDescriptor(Configuration configuration) {
+//        TODO 创建YarnClient
         final YarnClient yarnClient = YarnClient.createYarnClient();
         final YarnConfiguration yarnConfiguration =
                 Utils.getYarnAndHadoopConfiguration(configuration);

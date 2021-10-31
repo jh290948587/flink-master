@@ -162,6 +162,7 @@ public class YarnResourceManagerDriver extends AbstractResourceManagerDriver<Yar
     protected void initializeInternal() throws Exception {
         final YarnContainerEventHandler yarnContainerEventHandler = new YarnContainerEventHandler();
         try {
+//            在Flink的RM初始化时创建Yarn的RM的客户端client并启动，为了以后向Yarn申请资源使用
             resourceManagerClient =
                     yarnResourceManagerClientFactory.createResourceManagerClient(
                             yarnHeartbeatIntervalMillis, yarnContainerEventHandler);
@@ -181,6 +182,7 @@ public class YarnResourceManagerDriver extends AbstractResourceManagerDriver<Yar
             throw new ResourceManagerException("Could not start resource manager client.", e);
         }
 
+//        创建Yarn的NM的客户端，初始化并启动
         nodeManagerClient =
                 yarnNodeManagerClientFactory.createNodeManagerClient(yarnContainerEventHandler);
         nodeManagerClient.init(yarnConfig);

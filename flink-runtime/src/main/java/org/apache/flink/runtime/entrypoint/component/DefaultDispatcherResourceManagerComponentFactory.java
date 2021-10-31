@@ -118,9 +118,11 @@ public class DefaultDispatcherResourceManagerComponentFactory
         DispatcherRunner dispatcherRunner = null;
 
         try {
+//            找到高可用模式下Dispatcher的leader
             dispatcherLeaderRetrievalService =
                     highAvailabilityServices.getDispatcherLeaderRetriever();
 
+//            找到高可用模式下ResourceManager（flink的RM）的leader
             resourceManagerRetrievalService =
                     highAvailabilityServices.getResourceManagerLeaderRetriever();
 
@@ -157,6 +159,7 @@ public class DefaultDispatcherResourceManagerComponentFactory
                                     dispatcherGatewayRetriever,
                                     executor);
 
+//            创建通过页面提交的web服务
             webMonitorEndpoint =
                     restEndpointFactory.createRestEndpoint(
                             configuration,
@@ -169,10 +172,12 @@ public class DefaultDispatcherResourceManagerComponentFactory
                             fatalErrorHandler);
 
             log.debug("Starting Dispatcher REST endpoint.");
+//            启动web服务
             webMonitorEndpoint.start();
 
             final String hostname = RpcUtils.getHostname(rpcService);
 
+//            TODO 创建ResourceManager
             resourceManagerService =
                     ResourceManagerServiceImpl.create(
                             resourceManagerFactory,
@@ -208,6 +213,7 @@ public class DefaultDispatcherResourceManagerComponentFactory
                             ioExecutor);
 
             log.debug("Starting Dispatcher.");
+//            TODO 创建并启动DispatcherRunner => dispatcher会创建和启动JobMaster
             dispatcherRunner =
                     dispatcherRunnerFactory.createDispatcherRunner(
                             highAvailabilityServices.getDispatcherLeaderElectionService(),
@@ -218,6 +224,7 @@ public class DefaultDispatcherResourceManagerComponentFactory
                             partialDispatcherServices);
 
             log.debug("Starting ResourceManagerService.");
+//            TODO 启动ResourceManagerService
             resourceManagerService.start();
 
             resourceManagerRetrievalService.start(resourceManagerGatewayRetriever);

@@ -236,6 +236,7 @@ public abstract class ClusterEntrypoint implements AutoCloseableAsync, FatalErro
     private void runCluster(Configuration configuration, PluginManager pluginManager)
             throws Exception {
         synchronized (lock) {
+//            TODO 初始化Rpc相关服务
             initializeServices(configuration, pluginManager);
 
             // write host information into configuration
@@ -246,6 +247,7 @@ public abstract class ClusterEntrypoint implements AutoCloseableAsync, FatalErro
                     dispatcherResourceManagerComponentFactory =
                             createDispatcherResourceManagerComponentFactory(configuration);
 
+//            TODO 创建和启动JobManager里的组件：Dispatcher、ResourceManager、JobMaster
             clusterComponent =
                     dispatcherResourceManagerComponentFactory.create(
                             configuration,

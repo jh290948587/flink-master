@@ -37,6 +37,7 @@ final class DispatcherRunnerLeaderElectionLifecycleManager<
         this.dispatcherRunner = dispatcherRunner;
         this.leaderElectionService = leaderElectionService;
 
+//        注意此处的实现是StandaloneLeaderElectionService
         leaderElectionService.start(dispatcherRunner);
     }
 

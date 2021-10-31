@@ -235,11 +235,14 @@ public abstract class ResourceManager<WorkerType extends ResourceIDRetrievable>
 
             registerMetrics();
 
+//            TODO 启动心跳服务：TaskManager、JobManager
             startHeartbeatServices();
 
+//            TODO 启动SlotManager
             slotManager.start(
                     getFencingToken(), getMainThreadExecutor(), new ResourceActionsImpl());
 
+//            TODO 创建了Yarn的RM和NM客户端，初始化并启动
             initialize();
         } catch (Exception e) {
             handleStartResourceManagerServicesException(e);

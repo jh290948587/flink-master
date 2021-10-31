@@ -22,6 +22,7 @@ import org.apache.flink.runtime.jobmaster.JobMaster;
 import org.apache.flink.runtime.scheduler.ExecutionGraphInfo;
 
 /** Interface for completion actions once a Flink job has reached a terminal state. */
+//Flink 作业达到终止状态后完成操作的接口。
 public interface OnCompletionActions {
 
     /**
