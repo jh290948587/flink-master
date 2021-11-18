@@ -106,6 +106,7 @@ public abstract class ActiveResourceManagerFactory<WorkerType extends ResourceID
                 configuration.get(ResourceManagerOptions.START_WORKER_RETRY_INTERVAL);
         final Duration workerRegistrationTimeout =
                 configuration.get(ResourceManagerOptions.TASK_MANAGER_REGISTRATION_TIMEOUT);
+//        TODO 真正创建ResourceManager
         return new ActiveResourceManager<>(
                 createResourceManagerDriver(
                         configuration, webInterfaceUrl, rpcService.getAddress()),

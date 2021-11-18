@@ -527,6 +527,7 @@ public class SlotManagerImpl implements SlotManager {
 
             // next register the new slots
             for (SlotStatus slotStatus : initialSlotReport) {
+//                遍历slot并注册
                 registerSlot(
                         slotStatus.getSlotID(),
                         slotStatus.getAllocationID(),
@@ -735,12 +736,13 @@ public class SlotManagerImpl implements SlotManager {
      * Registers a slot for the given task manager at the slot manager. The slot is identified by
      * the given slot id. The given resource profile defines the available resources for the slot.
      * The task manager connection can be used to communicate with the task manager.
-     *
+     * 在slotmanager上为指定的taskmanager注册一个slot，资源配置文件定义了slot的可用资源
      * @param slotId identifying the slot on the task manager
      * @param allocationId which is currently deployed in the slot
      * @param resourceProfile of the slot
      * @param taskManagerConnection to communicate with the remote task manager
      */
+//    TODO 注册taskmanager的slot到slotmanager中，如果有等待分配slot的请求，则直接分配给等待的slot申请请求
     private void registerSlot(
             SlotID slotId,
             AllocationID allocationId,
@@ -758,12 +760,14 @@ public class SlotManagerImpl implements SlotManager {
                                     slotId)));
         }
 
+//        将slot注册到slotmanager的成员变量slots中
         final TaskManagerSlot slot =
                 createAndRegisterTaskManagerSlot(slotId, resourceProfile, taskManagerConnection);
 
         final PendingTaskManagerSlot pendingTaskManagerSlot;
 
         if (allocationId == null) {
+//            找到在slotpool中等待被分配的slot
             pendingTaskManagerSlot = findExactlyMatchingPendingTaskManagerSlot(resourceProfile);
         } else {
             pendingTaskManagerSlot = null;
@@ -776,9 +780,12 @@ public class SlotManagerImpl implements SlotManager {
             final PendingSlotRequest assignedPendingSlotRequest =
                     pendingTaskManagerSlot.getAssignedPendingSlotRequest();
 
+//            TODO 分配slot
             if (assignedPendingSlotRequest == null) {
+//                TODO 表示当前挂起的请求都被满足了，将slot加入成员变量freeSlots中
                 handleFreeSlot(slot);
             } else {
+//                TODO 表示slot要被分配给申请slot的请求
                 assignedPendingSlotRequest.unassignPendingTaskManagerSlot();
                 allocateSlot(slot, assignedPendingSlotRequest);
             }
@@ -971,9 +978,11 @@ public class SlotManagerImpl implements SlotManager {
         final ResourceProfile resourceProfile = pendingSlotRequest.getResourceProfile();
 
         OptionalConsumer.of(findMatchingSlot(resourceProfile))
+//                如果slot足够，直接分配
                 .ifPresent(taskManagerSlot -> allocateSlot(taskManagerSlot, pendingSlotRequest))
                 .ifNotPresent(
                         () ->
+//                                如果slot不够，去申请
                                 fulfillPendingSlotRequestWithPendingTaskManagerSlot(
                                         pendingSlotRequest));
     }
@@ -984,6 +993,7 @@ public class SlotManagerImpl implements SlotManager {
         Optional<PendingTaskManagerSlot> pendingTaskManagerSlotOptional =
                 findFreeMatchingPendingTaskManagerSlot(resourceProfile);
 
+//        如果不存在，请求资源
         if (!pendingTaskManagerSlotOptional.isPresent()) {
             pendingTaskManagerSlotOptional = allocateResource(resourceProfile);
         }
@@ -1089,6 +1099,7 @@ public class SlotManagerImpl implements SlotManager {
             return Optional.empty();
         }
 
+//        TODO 真正申请资源，启动新的TaskManager
         if (!resourceActions.allocateResource(defaultWorkerResourceSpec)) {
             // resource cannot be allocated
             return Optional.empty();
@@ -1146,6 +1157,7 @@ public class SlotManagerImpl implements SlotManager {
 
         // RPC call to the task manager
         CompletableFuture<Acknowledge> requestFuture =
+//                TODO 分配完成后，通知 TM 提供 slot 给 TM
                 gateway.requestSlot(
                         slotId,
                         pendingSlotRequest.getJobId(),

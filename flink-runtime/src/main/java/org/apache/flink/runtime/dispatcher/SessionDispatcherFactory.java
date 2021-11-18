@@ -36,6 +36,7 @@ public enum SessionDispatcherFactory implements DispatcherFactory {
             PartialDispatcherServicesWithJobGraphStore partialDispatcherServicesWithJobGraphStore)
             throws Exception {
         // create the default dispatcher
+//        TODO 因为Standalone模式就是一种特殊的session模式，所有可以直接创建StandaloneDispatcher
         return new StandaloneDispatcher(
                 rpcService,
                 fencingToken,

@@ -177,6 +177,8 @@ class AkkaRpcActor<T extends RpcEndpoint & RpcGateway> extends AbstractActor {
         try {
             switch (controlMessage) {
                 case START:
+//                    TODO 此处调用State的实现类StoppedState
+//                    ps：接收到START启动事件，则意味着现在的状态为Stopped，所有进入的是StoppedState的start方法
                     state = state.start(this);
                     break;
                 case STOP:

@@ -241,6 +241,7 @@ public class ResourceManagerServiceImpl implements ResourceManagerService, Leade
         stopLeaderResourceManager();
 
         this.leaderSessionID = newLeaderSessionID;
+//        TODO 创建ResourceManager
         this.leaderResourceManager =
                 resourceManagerFactory.createResourceManager(
                         rmProcessContext, newLeaderSessionID, ResourceID.generate());
@@ -273,6 +274,7 @@ public class ResourceManagerServiceImpl implements ResourceManagerService, Leade
     private CompletableFuture<Boolean> startResourceManagerIfIsLeader(
             ResourceManager<?> resourceManager) {
         if (isLeader(resourceManager)) {
+//            TODO 启动ResourceManager
             resourceManager.start();
             forwardTerminationFuture(resourceManager);
             return resourceManager.getStartedFuture().thenApply(ignore -> true);

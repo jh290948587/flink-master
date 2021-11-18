@@ -177,7 +177,7 @@ public class DefaultDispatcherResourceManagerComponentFactory
 
             final String hostname = RpcUtils.getHostname(rpcService);
 
-//            TODO 创建ResourceManager
+//            TODO 创建ResourceManagerService
             resourceManagerService =
                     ResourceManagerServiceImpl.create(
                             resourceManagerFactory,
@@ -213,7 +213,7 @@ public class DefaultDispatcherResourceManagerComponentFactory
                             ioExecutor);
 
             log.debug("Starting Dispatcher.");
-//            TODO 创建并启动DispatcherRunner => dispatcher会创建和启动JobMaster
+//            TODO 创建并启动Dispatcher => dispatcher创建并启动JobMaster
             dispatcherRunner =
                     dispatcherRunnerFactory.createDispatcherRunner(
                             highAvailabilityServices.getDispatcherLeaderElectionService(),
@@ -224,7 +224,7 @@ public class DefaultDispatcherResourceManagerComponentFactory
                             partialDispatcherServices);
 
             log.debug("Starting ResourceManagerService.");
-//            TODO 启动ResourceManagerService
+//            TODO 创建并启动ResourceManager
             resourceManagerService.start();
 
             resourceManagerRetrievalService.start(resourceManagerGatewayRetriever);

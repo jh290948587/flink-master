@@ -862,6 +862,7 @@ public class JobMaster extends PermanentlyFencedRpcEndpoint<JobMasterId>
     private void startJobExecution() throws Exception {
         validateRunsInMainThread();
 
+//        TODO 真正启动JobMaster服务
         startJobMasterServices();
 
         log.info(
@@ -870,22 +871,28 @@ public class JobMaster extends PermanentlyFencedRpcEndpoint<JobMasterId>
                 jobGraph.getJobID(),
                 getFencingToken());
 
+//        TODO 启动调度器
         startScheduling();
     }
 
     private void startJobMasterServices() throws Exception {
         try {
+//            TODO 启动心跳服务：taskManager、resourceManager
             this.taskManagerHeartbeatManager = createTaskManagerHeartbeatManager(heartbeatServices);
             this.resourceManagerHeartbeatManager =
                     createResourceManagerHeartbeatManager(heartbeatServices);
 
             // start the slot pool make sure the slot pool now accepts messages for this leader
+//            TODO 启动slotpool
             slotPoolService.start(getFencingToken(), getAddress(), getMainThreadExecutor());
 
-            // job is ready to go, try to establish connection with resource manager
+            // job is ready to go, try to establish（建立） connection with resource manager
+//            根据leader的通知激活resource manager的leader retrieval，将建立连接并且插槽池将开始请求插槽
             //   - activate leader retrieval for the resource manager
             //   - on notification of the leader, the connection will be established and
-            //     the slot pool will start requesting slots
+            //
+//            TODO 与ResourceManager建立连接，slotpool开始请求资源
+//            StandaloneLeaderRetrievalService的start方法实现
             resourceManagerLeaderRetriever.start(new ResourceManagerLeaderListener());
         } catch (Exception e) {
             handleStartJobMasterServicesError(e);
@@ -1074,6 +1081,7 @@ public class JobMaster extends PermanentlyFencedRpcEndpoint<JobMasterId>
                     new EstablishedResourceManagerConnection(
                             resourceManagerGateway, resourceManagerResourceId);
 
+//            TODO slotpool连接到ResourceManager，请求资源
             slotPoolService.connectToResourceManager(resourceManagerGateway);
 
             resourceManagerHeartbeatManager.monitorTarget(

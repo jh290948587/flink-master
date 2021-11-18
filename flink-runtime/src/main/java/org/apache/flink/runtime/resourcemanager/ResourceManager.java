@@ -439,6 +439,7 @@ public abstract class ResourceManager<WorkerType extends ResourceIDRetrievable>
                         if (throwable != null) {
                             return new RegistrationResponse.Failure(throwable);
                         } else {
+//                            继续调用内部注册方法
                             return registerTaskExecutorInternal(
                                     taskExecutorGateway, taskExecutorRegistration);
                         }
@@ -463,6 +464,7 @@ public abstract class ResourceManager<WorkerType extends ResourceIDRetrievable>
                 taskExecutors.get(taskManagerResourceId);
 
         if (workerTypeWorkerRegistration.getInstanceID().equals(taskManagerRegistrationId)) {
+//            将TaskManager slot等信息注册到slotManager中
             if (slotManager.registerTaskManager(
                     workerTypeWorkerRegistration,
                     slotReport,
@@ -526,6 +528,7 @@ public abstract class ResourceManager<WorkerType extends ResourceIDRetrievable>
                         slotRequest.getAllocationId());
 
                 try {
+//                    TODO ResourceManager内部的slotManaget向Yarn的ResourceManager申请资源
                     slotManager.registerSlotRequest(slotRequest);
                 } catch (ResourceManagerException e) {
                     return FutureUtils.completedExceptionally(e);
@@ -960,6 +963,7 @@ public abstract class ResourceManager<WorkerType extends ResourceIDRetrievable>
             return new TaskExecutorRegistrationRejection(
                     "The ResourceManager does not recognize this TaskExecutor.");
         } else {
+//            ResourceManager创建WorkerRegistration对象，放入taskExecutors成员变量中，就算是TaskExecutor注册了
             WorkerRegistration<WorkerType> registration =
                     new WorkerRegistration<>(
                             taskExecutorGateway,

@@ -279,6 +279,7 @@ public class ActiveResourceManager<WorkerType extends ResourceIDRetrievable>
         // trying to start new workers.
         // Otherwise, ActiveResourceManager will always re-requesting the worker,
         // which keeps the main thread busy.
+//        如果worker启动失败，将等待一个间隔，否则ActiveResourceManager 将始终重新启动worker，使主线程非常忙碌
         final CompletableFuture<WorkerType> requestResourceFuture =
                 startWorkerCoolDown.thenCompose(
                         (ignore) -> resourceManagerDriver.requestResource(taskExecutorProcessSpec));

@@ -126,7 +126,7 @@ public class TaskExecutorProcessSpecContainerResourcePriorityAdapter {
         if (resource.getMemory() > maxContainerResource.getMemory()
                 || resource.getVirtualCores() > maxContainerResource.getVirtualCores()) {
             LOG.warn(
-                    "Requested container resource ({}) exceeds the max limitation of the Yarn cluster ({}). Will not allocate resource.",
+                    "Requested container resource ({}) exceeds（超过） the max limitation of the Yarn cluster ({}). Will not allocate resource.",
                     resource,
                     maxContainerResource);
             return Optional.empty();

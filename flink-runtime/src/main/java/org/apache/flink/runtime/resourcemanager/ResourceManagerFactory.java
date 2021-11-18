@@ -100,6 +100,7 @@ public abstract class ResourceManagerFactory<T extends ResourceIDRetrievable> {
                         context.getHighAvailabilityServices(),
                         context.getSlotManagerMetricGroup());
 
+//        TODO 进入ActiveResourceManagerFactory的createResourceManager
         return createResourceManager(
                 context.getRmConfig(),
                 resourceId,

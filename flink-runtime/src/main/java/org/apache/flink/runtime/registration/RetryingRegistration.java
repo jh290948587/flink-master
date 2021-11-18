@@ -160,6 +160,7 @@ public abstract class RetryingRegistration<
                     rpcGatewayFuture.thenAcceptAsync(
                             (G rpcGateway) -> {
                                 log.info("Resolved {} address, beginning registration", targetName);
+//                                TODO 真正去注册
                                 register(
                                         rpcGateway,
                                         1,
@@ -218,6 +219,7 @@ public abstract class RetryingRegistration<
                     targetName,
                     attempt,
                     timeoutMillis);
+//            TODO 开始注册，调用invokeRegistration()方法
             CompletableFuture<RegistrationResponse> registrationFuture =
                     invokeRegistration(gateway, fencingToken, timeoutMillis);
 

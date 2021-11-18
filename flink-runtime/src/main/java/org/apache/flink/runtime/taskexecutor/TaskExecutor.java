@@ -385,6 +385,7 @@ public class TaskExecutor extends RpcEndpoint implements TaskExecutorGateway {
     @Override
     public void onStart() throws Exception {
         try {
+//            TODO 启动TaskExecutor服务
             startTaskExecutorServices();
         } catch (Throwable t) {
             final TaskManagerException exception =
@@ -1040,6 +1041,7 @@ public class TaskExecutor extends RpcEndpoint implements TaskExecutorGateway {
         }
 
         try {
+//            TODO 根据RM的分配slot指令，分配自己的slot
             allocateSlot(slotId, jobId, allocationId, resourceProfile);
         } catch (SlotAllocationException sae) {
             return FutureUtils.completedExceptionally(sae);
@@ -1074,6 +1076,7 @@ public class TaskExecutor extends RpcEndpoint implements TaskExecutorGateway {
         }
 
         if (job.isConnected()) {
+//            TODO 向JobManagert提供slot
             offerSlotsToJobManager(jobId);
         }
 
@@ -1323,6 +1326,8 @@ public class TaskExecutor extends RpcEndpoint implements TaskExecutorGateway {
             ClusterInformation clusterInformation) {
 
         final CompletableFuture<Acknowledge> slotReportResponseFuture =
+//                TODO 将 TaskExecutor 的所有slot的当前状态的报告SlotReport（描述哪些插槽可用和已分配，以及已分配的插槽已分配给哪些作业（JobManager））
+//                 发送给ResourceManager
                 resourceManagerGateway.sendSlotReport(
                         getResourceID(),
                         taskExecutorRegistrationId,

@@ -205,7 +205,7 @@ public abstract class Dispatcher extends PermanentlyFencedRpcEndpoint<Dispatcher
     @Override
     public void onStart() throws Exception {
         try {
-//            TODO 启动DispatcherServices，其实就是就是注册NUM_RUNNING_JOBS的guage指标
+//            TODO 启动DispatcherServices，其实就是注册NUM_RUNNING_JOBS的guage指标
             startDispatcherServices();
         } catch (Throwable t) {
             final DispatcherException exception =
@@ -466,7 +466,7 @@ public abstract class Dispatcher extends PermanentlyFencedRpcEndpoint<Dispatcher
             throws Exception {
         final RpcService rpcService = getRpcService();
 
-//        TODO 创建JobMaster
+//        TODO 创建runner：JobMasterServiceLeadershipRunner
         JobManagerRunner runner =
                 jobManagerRunnerFactory.createJobManagerRunner(
                         jobGraph,
@@ -478,6 +478,7 @@ public abstract class Dispatcher extends PermanentlyFencedRpcEndpoint<Dispatcher
                         new DefaultJobManagerJobMetricGroupFactory(jobManagerMetricGroup),
                         fatalErrorHandler,
                         initializationTimestamp);
+//        TODO 创建并启动JobMaster
         runner.start();
         return runner;
     }

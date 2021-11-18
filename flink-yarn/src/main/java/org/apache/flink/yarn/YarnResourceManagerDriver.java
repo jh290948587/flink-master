@@ -260,6 +260,7 @@ public class YarnResourceManagerDriver extends AbstractResourceManagerDriver<Yar
         } else {
             final Priority priority = priorityAndResourceOpt.get().getPriority();
             final Resource resource = priorityAndResourceOpt.get().getResource();
+//            getContainerRequest(resource, priority)：向yarn申请容器
             resourceManagerClient.addContainerRequest(getContainerRequest(resource, priority));
 
             // make sure we transmit the request fast and receive fast news of granted allocations

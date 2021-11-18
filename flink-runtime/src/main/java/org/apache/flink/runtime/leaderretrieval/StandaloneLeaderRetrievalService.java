@@ -82,6 +82,7 @@ public class StandaloneLeaderRetrievalService implements LeaderRetrievalService 
 
             // directly notify the listener, because we already know the leading JobManager's
             // address
+//            看要连接的对象是谁，就调用那个对象的listener的notifyLeaderAddress方法
             listener.notifyLeaderAddress(leaderAddress, leaderId);
         }
     }

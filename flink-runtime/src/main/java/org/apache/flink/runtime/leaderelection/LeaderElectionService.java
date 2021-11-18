@@ -33,6 +33,11 @@ import java.util.UUID;
  * by calling the method {@link #confirmLeadership(UUID, String)}. This will notify the leader
  * election service, that the contender has accepted the leadership specified and that the leader
  * session id as well as the leader address can now be published for leader retrieval services.
+ * 允许在一组竞争者中选举领导者的服务接口。
+ * 在使用此服务之前，必须调用 start 方法来启动它。 start 方法将竞争者作为参数。
+ * 如果有多个竞争者，那么每个竞争者都必须实例化自己的领导者选举服务。
+ * 一旦竞争者被授予领导权，他必须通过调用方法 {@link #confirmLeadership(UUID, String)} 来确认收到的领导者会话 ID。
+ * 这将通知领导选举服务，竞争者已接受指定的领导，并且现在可以为领导检索服务发布领导会话 ID 和领导地址。
  */
 public interface LeaderElectionService {
 
