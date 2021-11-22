@@ -112,6 +112,7 @@ public abstract class RpcEndpoint implements RpcGateway, AutoCloseableAsync {
      *
      * <p>IMPORTANT: the running state is not thread safe and can be used only in the main thread of
      * the rpc endpoint.
+     * 线程不安全，只能在主线程使用
      */
     private boolean isRunning;
 
