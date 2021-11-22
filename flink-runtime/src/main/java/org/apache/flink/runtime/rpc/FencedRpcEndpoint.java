@@ -31,6 +31,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
 /**
+ * 受保护的RpcEndpoint，使用token验证，仅当token是endpoint自己的token时执行rpc
  * Base class for fenced {@link RpcEndpoint}. A fenced rpc endpoint expects all rpc messages being
  * enriched with fencing tokens. Furthermore, the rpc endpoint has its own fencing token assigned.
  * The rpc is then only executed if the attached fencing token equals the endpoint's own token.
