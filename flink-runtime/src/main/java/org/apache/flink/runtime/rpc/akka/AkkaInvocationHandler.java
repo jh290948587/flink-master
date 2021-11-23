@@ -77,6 +77,7 @@ class AkkaInvocationHandler implements InvocationHandler, AkkaBasedEndpoint, Rpc
     private final ActorRef rpcEndpoint;
 
     // whether the actor ref is local and thus no message serialization is needed
+//    如果actor ref是本地的，则不需要序列化，否则序列化
     protected final boolean isLocal;
 
     // default timeout for asks
