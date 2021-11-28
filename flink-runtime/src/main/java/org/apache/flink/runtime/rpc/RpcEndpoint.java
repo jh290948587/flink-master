@@ -79,6 +79,9 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
  *
  * The running state can be queried in a RPC method handler or in the main thread by calling {@link
  * #isRunning()} method.
+ *
+ * RpcEndpoint 是通信终端，提供 RPC 服务组件的生命周期管理(start、stop)。
+ * 在 Flink 的设计中，对于同一个 Endpoint，所有的调用都运行在主线程，因此不会有并发问题
  */
 public abstract class RpcEndpoint implements RpcGateway, AutoCloseableAsync {
 
@@ -104,6 +107,8 @@ public abstract class RpcEndpoint implements RpcGateway, AutoCloseableAsync {
     /**
      * The main thread executor to be used to execute future callbacks in the main thread of the
      * executing rpc server.
+     *
+     * 主线程执行器，所有调用在主线程中串行执行
      */
     private final MainThreadExecutor mainThreadExecutor;
 

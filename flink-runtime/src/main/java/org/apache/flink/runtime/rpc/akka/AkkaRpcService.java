@@ -86,6 +86,8 @@ import static org.apache.flink.util.Preconditions.checkState;
 /**
  * Akka based {@link RpcService} implementation. The RPC service starts an Akka actor to receive RPC
  * invocations from a {@link RpcGateway}.
+ *
+ *  AkkaRpcService，是 Akka 的 ActorSystem 的封装，基本可以理解成 ActorSystem 的一个适配器
  */
 @ThreadSafe
 public class AkkaRpcService implements RpcService {
