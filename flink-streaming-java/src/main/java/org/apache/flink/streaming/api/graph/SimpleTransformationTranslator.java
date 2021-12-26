@@ -59,6 +59,8 @@ public abstract class SimpleTransformationTranslator<OUT, T extends Transformati
         checkNotNull(context);
 
         final Collection<Integer> transformedIds =
+//                这里的实现类根据情况而定，如果是map这种改变数据本身的，一般是 AbstractOneInputTransformationTranslator下的实现类
+//                如果是keyby这种分发数据的，一般是 PartitionTransformationTranslator
                 translateForStreamingInternal(transformation, context);
         configure(transformation, context);
 

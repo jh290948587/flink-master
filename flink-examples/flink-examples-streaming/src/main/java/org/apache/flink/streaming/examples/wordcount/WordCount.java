@@ -81,6 +81,10 @@ public class WordCount {
 
         DataStream<Tuple2<String, Integer>> counts =
                 // split up the lines in pairs (2-tuples) containing: (word,1)
+//                每调用一个算子，都会经过一系列转换之后加入到StreamExecutionEnvironment的transformations成员变量中
+//                以map算子为例，map算子将用户自定义的函数 MapFunction 包装到 StreamMap 这个 Operator 中，
+//                再将 StreamMap 包装到 OneInputTransformation，最后该 transformation 存 到 env 中。
+//                当调用 env.execute 时，遍历其中的 transformation 集合构造出 StreamGraph。
                 text.map(x -> x).
                         flatMap(new Tokenizer())
                         // group by the tuple field "0" and sum up tuple field "1"
