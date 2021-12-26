@@ -35,6 +35,7 @@ public class EdgeManagerBuildUtil {
     /**
      * Calculate the connections between {@link ExecutionJobVertex} and {@link IntermediateResult} *
      * based on the {@link DistributionPattern}.
+     * 通过distributionPattern判断ExecutionJobVertex和IntermediateResult的连接方式
      *
      * @param vertex the downstream consumer {@link ExecutionJobVertex}
      * @param intermediateResult the upstream consumed {@link IntermediateResult}
@@ -46,6 +47,7 @@ public class EdgeManagerBuildUtil {
             IntermediateResult intermediateResult,
             DistributionPattern distributionPattern) {
 
+//        只有forward的方式的情况下，pattern才是POINTWISE，否则均为ALL_TO_ALL
         switch (distributionPattern) {
             case POINTWISE:
                 connectPointwise(vertex.getTaskVertices(), intermediateResult);

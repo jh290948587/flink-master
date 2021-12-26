@@ -102,6 +102,7 @@ public abstract class AbstractStreamTaskNetworkInput<
                 }
 
                 if (result.isFullRecord()) {
+//                    处理元素
                     processElement(deserializationDelegate.getInstance(), output);
                     return InputStatus.MORE_AVAILABLE;
                 }
@@ -131,6 +132,7 @@ public abstract class AbstractStreamTaskNetworkInput<
 
     private void processElement(StreamElement recordOrMark, DataOutput<T> output) throws Exception {
         if (recordOrMark.isRecord()) {
+//            如果是map算子，emitRecord应该在OneInputStreamTask.java调用
             output.emitRecord(recordOrMark.asRecord());
         } else if (recordOrMark.isWatermark()) {
             statusWatermarkValve.inputWatermark(

@@ -313,6 +313,7 @@ public class JobMaster extends PermanentlyFencedRpcEndpoint<JobMasterId>
 
         this.jobManagerJobMetricGroup = jobMetricGroupFactory.create(jobGraph);
         this.jobStatusListener = new JobManagerJobStatusListener();
+//        TODO 创建调度器，创建的时候把JobGraph转换成ExecutionGraph
         this.schedulerNG =
                 createScheduler(
                         slotPoolServiceSchedulerFactory,

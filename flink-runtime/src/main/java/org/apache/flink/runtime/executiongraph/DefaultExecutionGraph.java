@@ -776,6 +776,7 @@ public class DefaultExecutionGraph implements ExecutionGraph, InternalExecutionG
                     parallelismStore.getParallelismInfo(jobVertex.getID());
 
             // create the execution job vertex and attach it to the graph
+//            TODO 实例化执行图节点，根据每一个JobVertex，创建对应的ExecutionVertex
             ExecutionJobVertex ejv =
                     new ExecutionJobVertex(
                             this,
@@ -786,6 +787,7 @@ public class DefaultExecutionGraph implements ExecutionGraph, InternalExecutionG
                             parallelismInfo,
                             initialAttemptCounts.getAttemptCounts(jobVertex.getID()));
 
+//            TODO 核心逻辑：将创建的ExecutionJobVertex与前置的IntermediateResult连接起来
             ejv.connectToPredecessors(this.intermediateResults);
 
             ExecutionJobVertex previousTask = this.tasks.putIfAbsent(jobVertex.getID(), ejv);

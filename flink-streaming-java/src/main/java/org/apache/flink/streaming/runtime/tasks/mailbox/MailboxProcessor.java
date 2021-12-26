@@ -197,10 +197,12 @@ public class MailboxProcessor implements Closeable {
 
         final MailboxController defaultActionContext = new MailboxController(this);
 
+//        邮箱里有邮件，就进行处理。邮件就是类似于map之类的子任务
         while (isNextLoopPossible()) {
             // The blocking `processMail` call will not return until default action is available.
             processMail(localMailbox, false);
             if (isNextLoopPossible()) {
+//                邮箱默认操作在StreamTask构造器中指定，为processInput()
                 mailboxDefaultAction.runDefaultAction(
                         defaultActionContext); // lock is acquired inside default action as needed
             }

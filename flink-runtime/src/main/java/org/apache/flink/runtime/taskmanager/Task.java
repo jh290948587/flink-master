@@ -726,6 +726,7 @@ public class Task
             FlinkSecurityManager.monitorUserSystemExitForCurrentThread();
             try {
                 // now load and instantiate the task's invokable code
+//                TODO 加载和实例化task的可执行代码
                 invokable =
                         loadAndInstantiateInvokable(
                                 userCodeClassLoader.asClassLoader(), nameOfInvokableClass, env);
@@ -776,6 +777,8 @@ public class Task
             FlinkSecurityManager.monitorUserSystemExitForCurrentThread();
             try {
                 // run the invokable
+//                TODO 执行代码（invokable即为operator对象实例，比如StreamTask里）
+//                分为source、translate、sink几大类
                 invokable.invoke();
             } finally {
                 FlinkSecurityManager.unmonitorUserSystemExitForCurrentThread();

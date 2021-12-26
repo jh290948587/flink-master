@@ -632,12 +632,14 @@ public abstract class StreamTask<OUT, OP extends StreamOperator<OUT>> extends Ab
         ensureNotCanceled();
 
         // let the task do its work
+//        TODO （重要）运行任务
         runMailboxLoop();
 
         // if this left the run() method cleanly despite the fact that this was canceled,
         // make sure the "clean shutdown" is not attempted
         ensureNotCanceled();
 
+//        运行任务之后的清理工作
         afterInvoke();
     }
 

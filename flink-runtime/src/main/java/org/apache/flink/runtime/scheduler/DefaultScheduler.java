@@ -175,6 +175,7 @@ public class DefaultScheduler extends SchedulerBase implements SchedulerOperatio
                 "Starting scheduling with scheduling strategy [{}]",
                 schedulingStrategy.getClass().getName());
         transitionToRunning();
+//        新版本中，默认的调度策略是PipelinedRegion（1.12以后）
         schedulingStrategy.startScheduling();
     }
 
@@ -413,6 +414,7 @@ public class DefaultScheduler extends SchedulerBase implements SchedulerOperatio
 
     private void waitForAllSlotsAndDeploy(final List<DeploymentHandle> deploymentHandles) {
         FutureUtils.assertNoException(
+//                分配所有资源，并部署
                 assignAllResources(deploymentHandles).handle(deployAll(deploymentHandles)));
     }
 
@@ -442,6 +444,7 @@ public class DefaultScheduler extends SchedulerBase implements SchedulerOperatio
                 checkState(slotAssigned.isDone());
 
                 FutureUtils.assertNoException(
+//                        已分配的slot需要去处理部署task
                         slotAssigned.handle(deployOrHandleError(deploymentHandle)));
             }
             return null;
@@ -526,6 +529,7 @@ public class DefaultScheduler extends SchedulerBase implements SchedulerOperatio
             }
 
             if (throwable == null) {
+//                安全部署task
                 deployTaskSafe(executionVertexId);
             } else {
                 handleTaskDeploymentFailure(executionVertexId, throwable);
@@ -536,7 +540,9 @@ public class DefaultScheduler extends SchedulerBase implements SchedulerOperatio
 
     private void deployTaskSafe(final ExecutionVertexID executionVertexId) {
         try {
+//            通过执行图的节点ID获取执行图的节点
             final ExecutionVertex executionVertex = getExecutionVertex(executionVertexId);
+//            TODO 部署执行图节点
             executionVertexOperations.deploy(executionVertex);
         } catch (Throwable e) {
             handleTaskDeploymentFailure(executionVertexId, e);

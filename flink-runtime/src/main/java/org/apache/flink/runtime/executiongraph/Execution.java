@@ -576,6 +576,8 @@ public class Execution
                     getAssignedResourceLocation(),
                     slot.getAllocationId());
 
+//            将IntermediateResultPartition转化成ResultPartition
+//            将ExecutionEdge转成InputChannelDeploymentDescriptor（最终会在执行时转换成InputGate）
             final TaskDeploymentDescriptor deployment =
                     TaskDeploymentDescriptorFactory.fromExecutionVertex(vertex, attemptNumber)
                             .createDeploymentDescriptor(
@@ -596,6 +598,7 @@ public class Execution
             // does not block
             // the main thread and sync back to the main thread once submission is completed.
             CompletableFuture.supplyAsync(
+//                                    TODO （重要）向TaskManager提交任务
                             () -> taskManagerGateway.submitTask(deployment, rpcTimeout), executor)
                     .thenCompose(Function.identity())
                     .whenCompleteAsync(
